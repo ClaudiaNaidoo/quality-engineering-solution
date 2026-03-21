@@ -55,7 +55,7 @@ export default defineConfig({
   /* Configure projects for major browsers (UI tests only; API lives under tests/api/) */
   projects: [
     {
-      name: 'chromium',
+      name: 'ui',
       testIgnore: 'api/**',
       use: { ...devices['Desktop Chrome'] },
     },

@@ -29,7 +29,7 @@ npx playwright test
 npm run test:ui
 ```
 
-*Single browser (faster):* `npx playwright test --project=chromium`
+*Single browser (faster):* `npx playwright test --project=ui`
 
 ### API tests only
 
@@ -54,6 +54,15 @@ Auto-fix where possible:
 ```bash
 npm run lint:fix
 ```
+
+---
+
+## 🚀 CI/CD
+
+**QE Test Pipeline** ([`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)) runs on **push** and **pull request** with **concurrency** (same branch cancels older runs). Three parallel jobs on `ubuntu-latest`: **Lint** (`npm run lint`), **API tests** (`--project=api`), **UI tests** (`--project=ui`, Chromium).
+
+**Artifacts** (14 days, per job): `monocart-report-api|ui`, `playwright-report-api|ui`, `test-results-api|ui`.
+
 
 ---
 
