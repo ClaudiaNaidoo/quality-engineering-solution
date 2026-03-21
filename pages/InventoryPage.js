@@ -69,16 +69,24 @@ export class InventoryPage {
     return this.inventoryItems.locator('[data-test="inventory-item-name"]').allTextContents();
   }
 
-  addItemToCart(itemName) {
-    return this.page.getByRole('button', { name: `Add to cart ${itemName}` }).click();
+  /**
+   * Add-to-cart is labelled "Add to cart" only; scope to the product row by name.
+   * @param {string} itemName
+   */
+  getAddToCartButton(itemName) {
+    return this.getInventoryItemByName(itemName).getByRole('button', {
+      name: /^add to cart$/i,
+    });
   }
 
-  getAddToCartButton(itemName) {
-    return this.page.getByRole('button', { name: `Add to cart ${itemName}` });
+  addItemToCart(itemName) {
+    return this.getAddToCartButton(itemName).click();
   }
 
   removeItemFromCart(itemName) {
-    return this.page.getByRole('button', { name: `Remove ${itemName}` }).click();
+    return this.getInventoryItemByName(itemName).getByRole('button', {
+      name: /^remove$/i,
+    }).click();
   }
 
   async openCart() {

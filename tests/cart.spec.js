@@ -10,7 +10,7 @@ const itemName = SAUCE_DEMO_ITEMS.backpack;
 const secondItemName = SAUCE_DEMO_ITEMS.bikeLight;
 
 async function expectCartBadgeHidden(inventoryPage) {
-  await expect(inventoryPage.cartBadge).not.toBeVisible();
+  await expect(inventoryPage.cartBadge).toBeHidden();
 }
 
 async function expectCartBadgeCount(inventoryPage, count) {

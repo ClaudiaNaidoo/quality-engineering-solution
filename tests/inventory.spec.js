@@ -35,7 +35,7 @@ async function expectPricesSortedDescending(inventoryPage) {
 }
 
 async function expectCartBadgeHidden(inventoryPage) {
-  await expect(inventoryPage.cartBadge).not.toBeVisible();
+  await expect(inventoryPage.cartBadge).toBeHidden();
 }
 
 async function expectCartBadgeCount(inventoryPage, count) {
@@ -86,7 +86,7 @@ test.describe('inventory', () => {
 
     await inventoryPage.addItemToCart(itemName);
     await expectCartBadgeCount(inventoryPage, 1);
-    await expect(inventoryPage.getAddToCartButton(itemName)).not.toBeVisible();
+    await expect(inventoryPage.getAddToCartButton(itemName)).toBeHidden();
 
     await inventoryPage.removeItemFromCart(itemName);
     await expectCartBadgeHidden(inventoryPage);

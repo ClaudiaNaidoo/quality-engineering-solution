@@ -11,7 +11,7 @@ export class LoginPage {
   }
 
   async goto() {
-    await this.page.goto(getUiBaseUrl());
+    await this.page.goto(getUiBaseUrl(), { waitUntil: 'domcontentloaded' });
   }
 
   async login(username, password) {

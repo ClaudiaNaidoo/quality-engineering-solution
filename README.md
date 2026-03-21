@@ -41,6 +41,22 @@ npx playwright test --project=api
 
 ---
 
+## 🧹 Linting
+
+ESLint is used to maintain code quality and consistency across UI and API tests (flat config: `eslint.config.mjs`; Playwright rules apply to `tests/**`).
+
+```bash
+npm run lint
+```
+
+Auto-fix where possible:
+
+```bash
+npm run lint:fix
+```
+
+---
+
 ## 📊 Custom reporting (Monocart)
 
 After any run, Monocart writes an HTML report here:

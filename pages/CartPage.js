@@ -16,7 +16,9 @@ export class CartPage {
   }
 
   removeItem(itemName) {
-    return this.page.getByRole('button', { name: `Remove ${itemName}` }).click();
+    return this.getCartItem(itemName)
+      .getByRole('button', { name: /^remove$/i })
+      .click();
   }
 
   async continueShopping() {
