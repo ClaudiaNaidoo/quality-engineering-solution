@@ -1,12 +1,17 @@
 import { expect, test } from '@playwright/test';
-import { InventoryPage } from '../pages/InventoryPage';
-import { LoginPage } from '../pages/LoginPage';
+import { InventoryPage } from '../../pages/InventoryPage';
+import { LoginPage } from '../../pages/LoginPage';
 import {
   INVALID_PASSWORD_CREDENTIALS,
   LOGIN_ERRORS,
   LOGIN_USERS,
-} from './fixtures/loginUsers';
-import { getInventoryUrlRegex, getLoginUrlRegex, uiPathUrl } from '../utils/urls';
+} from '../fixtures/loginUsers';
+import {
+  getInventoryUrlRegex,
+  getLoginUrlRegex,
+  sauceDemoGotoOptions,
+  uiPathUrl,
+} from '../../utils/urls';
 
 const LOGIN_URL = getLoginUrlRegex();
 const INVENTORY_URL = getInventoryUrlRegex();
@@ -57,7 +62,7 @@ test.describe('auth happy path ui', () => {
 
 test.describe('auth session and route protection', () => {
   test('unauthenticated deep link to cart shows login', async ({ page }) => {
-    await page.goto(uiPathUrl('cart.html'));
+    await page.goto(uiPathUrl('cart.html'), sauceDemoGotoOptions);
     const loginPage = new LoginPage(page);
     await expect(page).toHaveURL(LOGIN_URL);
     await expect(loginPage.loginButton).toBeVisible();

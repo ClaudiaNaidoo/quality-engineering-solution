@@ -1,10 +1,10 @@
 import { expect, test } from '@playwright/test';
-import { CartPage } from '../pages/CartPage';
-import { InventoryPage } from '../pages/InventoryPage';
-import { LoginPage } from '../pages/LoginPage';
-import { LOGIN_USERS } from './fixtures/loginUsers';
-import { SAUCE_DEMO_ITEMS } from './fixtures/sauceDemoCatalog';
-import { getCartUrlRegex, getInventoryUrlRegex } from '../utils/urls';
+import { CartPage } from '../../pages/CartPage';
+import { InventoryPage } from '../../pages/InventoryPage';
+import { LoginPage } from '../../pages/LoginPage';
+import { LOGIN_USERS } from '../fixtures/loginUsers';
+import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
+import { getCartUrlRegex, getInventoryUrlRegex } from '../../utils/urls';
 
 const itemName = SAUCE_DEMO_ITEMS.backpack;
 
