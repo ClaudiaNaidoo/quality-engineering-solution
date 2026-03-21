@@ -3,6 +3,7 @@ import { CheckoutPage } from '../../pages/CheckoutPage';
 import { InventoryPage } from '../../pages/InventoryPage';
 import { LoginPage } from '../../pages/LoginPage';
 import { LOGIN_USERS } from '../fixtures/loginUsers';
+import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
 
 /**
  * Log in as standard_user and return page objects for follow-on steps.
@@ -19,9 +20,12 @@ export async function loginAsStandardUser(page) {
 /**
  * Standard user at checkout step one (your information) with one item in cart.
  * @param {import('@playwright/test').Page} page
- * @param {string} itemName
+ * @param {string} [itemName]
  */
-export async function navigateToCheckoutStepOne(page, itemName) {
+export async function navigateToCheckoutStepOne(
+  page,
+  itemName = SAUCE_DEMO_ITEMS.backpack
+) {
   const { inventoryPage } = await loginAsStandardUser(page);
   const cartPage = new CartPage(page);
   await inventoryPage.addItemToCart(itemName);

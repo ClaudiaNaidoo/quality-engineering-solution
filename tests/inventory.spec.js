@@ -3,9 +3,10 @@ import { CartPage } from '../pages/CartPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { LoginPage } from '../pages/LoginPage';
 import { LOGIN_USERS } from './fixtures/loginUsers';
+import { SAUCE_DEMO_ITEMS } from './fixtures/sauceDemoCatalog';
 import { getCartUrlRegex, getInventoryUrlRegex } from '../utils/urls';
 
-const itemName = 'Sauce Labs Backpack';
+const itemName = SAUCE_DEMO_ITEMS.backpack;
 
 function parsePriceLabel(text) {
   return Number.parseFloat(text.replace(/[^0-9.]/g, ''));

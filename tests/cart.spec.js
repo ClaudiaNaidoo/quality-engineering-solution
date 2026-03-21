@@ -3,10 +3,11 @@ import { CartPage } from '../pages/CartPage';
 import { InventoryPage } from '../pages/InventoryPage';
 import { LoginPage } from '../pages/LoginPage';
 import { LOGIN_USERS } from './fixtures/loginUsers';
+import { SAUCE_DEMO_ITEMS } from './fixtures/sauceDemoCatalog';
 import { getCartUrlRegex, getInventoryUrlRegex } from '../utils/urls';
 
-const itemName = 'Sauce Labs Backpack';
-const secondItemName = 'Sauce Labs Bike Light';
+const itemName = SAUCE_DEMO_ITEMS.backpack;
+const secondItemName = SAUCE_DEMO_ITEMS.bikeLight;
 
 async function expectCartBadgeHidden(inventoryPage) {
   await expect(inventoryPage.cartBadge).not.toBeVisible();

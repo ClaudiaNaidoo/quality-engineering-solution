@@ -1,7 +1,8 @@
 import { expect, test } from '@playwright/test';
 import { CartPage } from '../pages/CartPage';
-import { loginAsStandardUser, navigateToCheckoutStepOne } from './helpers/flows';
 import { CHECKOUT_STEP_ONE_ERRORS } from './fixtures/checkoutErrors';
+import { SAUCE_DEMO_ITEMS } from './fixtures/sauceDemoCatalog';
+import { loginAsStandardUser, navigateToCheckoutStepOne } from './helpers/flows';
 import {
   getCartUrlRegex,
   getCheckoutCompleteUrlRegex,
@@ -9,7 +10,7 @@ import {
   getCheckoutStepTwoUrlRegex,
 } from '../utils/urls';
 
-const itemName = 'Sauce Labs Backpack';
+const itemName = SAUCE_DEMO_ITEMS.backpack;
 
 test.describe('checkout step one validation', () => {
   test('requires first name', async ({ page }) => {

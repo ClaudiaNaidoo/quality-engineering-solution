@@ -23,10 +23,28 @@ export async function getAuthToken(request) {
 }
 
 /**
- * Expect create-booking to fail: HTTP error OR non-success body shape.
- * @param {import('@playwright/test').APIResponse} response
+ * Best-effort DELETE; ignores failures (already deleted, network blips).
+ * @param {import('@playwright/test').APIRequestContext} request
+ * @param {number | undefined | null} bookingId
+ * @param {string | undefined | null} token
  */
-export async function assertCreateDoesNotSucceed(response) {
+export async function safeDeleteBooking(request, bookingId, token) {
+  if (bookingId == null || token == null) return;
+  try {
+    await api(request).deleteBooking(bookingId, token);
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * Expect create-booking to fail: HTTP error OR non-success body shape.
+ * If response includes a bookingid, deletes it in a finally block (no orphans).
+ * @param {import('@playwright/test').APIResponse} response
+ * @param {import('@playwright/test').APIRequestContext} request
+ * @param {string} token
+ */
+export async function assertCreateDoesNotSucceed(response, request, token) {
   const status = response.status();
   if (status >= 400) {
     expect(status).toBeGreaterThanOrEqual(400);
@@ -50,5 +68,11 @@ export async function assertCreateDoesNotSucceed(response) {
     typeof body.booking.bookingdates.checkin === 'string' &&
     typeof body.booking.bookingdates.checkout === 'string';
 
-  expect(looksLikeOkCreate, JSON.stringify(body)).toBe(false);
+  try {
+    expect(looksLikeOkCreate, JSON.stringify(body)).toBe(false);
+  } finally {
+    if (typeof body.bookingid === 'number') {
+      await safeDeleteBooking(request, body.bookingid, token);
+    }
+  }
 }

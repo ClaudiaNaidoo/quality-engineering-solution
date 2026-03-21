@@ -1,10 +1,11 @@
 import { expect, test } from '@playwright/test';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import { SAUCE_DEMO_ITEMS } from './fixtures/sauceDemoCatalog';
 import { loginAsStandardUser } from './helpers/flows';
 import { getInventoryUrlRegex } from '../utils/urls';
 
-const itemName = 'Sauce Labs Backpack';
+const itemName = SAUCE_DEMO_ITEMS.backpack;
 
 test.describe('e2e user journey', () => {
   test('standard user completes login through checkout', async ({ page }) => {
