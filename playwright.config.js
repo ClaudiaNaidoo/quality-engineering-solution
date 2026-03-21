@@ -1,5 +1,11 @@
 // @ts-check
+import path from 'node:path';
+import os from 'node:os';
 import { defineConfig, devices } from '@playwright/test';
+
+const outputDir =
+  process.env.PLAYWRIGHT_OUTPUT_DIR ??
+  (process.env.CI ? 'test-results' : path.join(os.tmpdir(), 'pw-quality-engineering-solution'));
 
 /**
  * Read environment variables from file.
@@ -13,6 +19,7 @@ import { defineConfig, devices } from '@playwright/test';
  * @see https://playwright.dev/docs/test-configuration
  */
 export default defineConfig({
+  outputDir,
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -35,21 +42,32 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
 
-  /* Configure projects for major browsers */
+  /* Configure projects for major browsers (UI tests only; API lives under tests/api/) */
   projects: [
     {
       name: 'chromium',
+      testIgnore: 'api/**',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
+      testIgnore: 'api/**',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
+      testIgnore: 'api/**',
       use: { ...devices['Desktop Safari'] },
+    },
+
+    {
+      name: 'api',
+      testMatch: 'api/**/*.spec.js',
+      use: {
+        baseURL: process.env.API_BASE_URL || 'https://restful-booker.herokuapp.com',
+      },
     },
 
     /* Test against mobile viewports. */
