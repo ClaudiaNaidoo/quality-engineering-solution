@@ -33,6 +33,14 @@ npm run test:ui
 
 *Single file:* `npx playwright test tests/ui/auth.spec.js --project=ui`
 
+### Mobile (iPhone 13 emulation, one critical journey)
+
+```bash
+npm run test:mobile
+```
+
+*or* `npx playwright test --project=mobile` (Chromium + device profile from `tests/ui/mobile.spec.js`).
+
 ### API tests only
 
 ```bash
@@ -64,6 +72,8 @@ npm run lint:fix
 ## 🚀 CI/CD
 
 **QE Test Pipeline** ([`.github/workflows/playwright.yml`](.github/workflows/playwright.yml)) runs on **push** and **pull request** with **concurrency** (same branch cancels older runs). Three parallel jobs on `ubuntu-latest`: **Lint** (`npm run lint`), **API tests** (`--project=api`), **UI tests** (`--project=ui`, Chromium).
+
+**Mobile** (`npm run test:mobile`, iPhone 13–style emulation) is **not** in CI by default; add a workflow job with `npx playwright test --project=mobile` if you want it on every push.
 
 **Artifacts** (14 days, per job): `monocart-report-api|ui`, `playwright-report-api|ui`, `test-results-api|ui`.
 
@@ -134,7 +144,7 @@ Monocart summary from that run: **51 passed**, **0 failed** (see `monocart-repor
 ## 📁 Project structure (brief)
 
 ```text
-tests/ui/        # UI specs (*.spec.js) — Sauce Demo
+tests/ui/        # UI specs (*.spec.js) — Sauce Demo (+ mobile.spec.js → `mobile` project only)
 tests/api/       # API specs (*.spec.js) — Restful Booker
 pages/           # Page objects (UI)
 tests/helpers/   # Shared flows and API helpers

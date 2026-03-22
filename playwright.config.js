@@ -56,19 +56,29 @@ export default defineConfig({
     {
       name: 'ui',
       testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
       testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
       testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Safari'] },
+    },
+
+    /* Single critical journey: Chromium + iPhone 13 emulation (see tests/ui/mobile.spec.js). */
+    {
+      name: 'mobile',
+      testMatch: 'ui/mobile.spec.js',
+      use: { ...devices['Desktop Chrome'] },
     },
 
     {
