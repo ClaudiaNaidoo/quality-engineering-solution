@@ -1,4 +1,3 @@
-// @ts-check
 import path from 'node:path';
 import os from 'node:os';
 import { defineConfig, devices } from '@playwright/test';
@@ -52,24 +51,34 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
 
-  /* Configure projects for major browsers (UI tests only; API lives under tests/api/) */
+  /* UI: tests/ui/** — API: tests/api/** (paths relative to testDir) */
   projects: [
     {
       name: 'ui',
-      testIgnore: 'api/**',
+      testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
       name: 'firefox',
-      testIgnore: 'api/**',
+      testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Firefox'] },
     },
 
     {
       name: 'webkit',
-      testIgnore: 'api/**',
+      testMatch: 'ui/**/*.spec.js',
+      testIgnore: 'ui/mobile.spec.js',
       use: { ...devices['Desktop Safari'] },
+    },
+
+    /* Single critical journey: Chromium + iPhone 13 emulation (see tests/ui/mobile.spec.js). */
+    {
+      name: 'mobile',
+      testMatch: 'ui/mobile.spec.js',
+      use: { ...devices['Desktop Chrome'] },
     },
 
     {
