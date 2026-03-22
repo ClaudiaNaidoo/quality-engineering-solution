@@ -25,7 +25,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('cart', () => {
-  test('starts empty after login', async ({ page }) => {
+  test('cart starts empty after login', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await expectCartBadgeHidden(inventoryPage);
 
@@ -37,7 +37,7 @@ test.describe('cart', () => {
     await expect(cartPage.getCartItems()).toHaveCount(0);
   });
 
-  test('badge and items persist across inventory and cart', async ({ page }) => {
+  test('badge and items persist across inventory and cart pages', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await inventoryPage.addItemToCart(secondItemName);
@@ -57,7 +57,7 @@ test.describe('cart', () => {
     await expectCartBadgeCount(inventoryPage, 2);
   });
 
-  test('add to cart shows line item', async ({ page }) => {
+  test('adding to cart shows line item', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await expectCartBadgeCount(inventoryPage, 1);
@@ -70,7 +70,7 @@ test.describe('cart', () => {
     await expect(cartPage.getCartItems()).toHaveCount(1);
   });
 
-  test('remove last item clears cart and hides badge', async ({ page }) => {
+  test('removing last item clears cart and hides badge', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await expectCartBadgeCount(inventoryPage, 1);
@@ -90,7 +90,7 @@ test.describe('cart', () => {
     await expect(inventoryPage.getAddToCartButton(itemName)).toBeVisible();
   });
 
-  test('cart survives page refresh', async ({ page }) => {
+  test('cart items persist after page refresh', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await expectCartBadgeCount(inventoryPage, 1);
@@ -108,7 +108,7 @@ test.describe('cart', () => {
     await expect(cartPage.getCartItems()).toHaveCount(1);
   });
 
-  test('removing one item leaves the other and updates badge', async ({ page }) => {
+  test('removing one item leaves the other item and updates badge', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await inventoryPage.addItemToCart(secondItemName);

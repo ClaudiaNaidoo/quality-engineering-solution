@@ -8,12 +8,12 @@ import {
 } from '../helpers/restfulBookerApi.js';
 
 test.describe('Restful Booker — Response validation (create & errors)', () => {
-  test('malformed JSON returns 400 or 500', async ({ request }) => {
+  test('invalid JSON body: POST /booking returns 400 or 500', async ({ request }) => {
     const response = await api(request).createBookingRaw('{"firstname":"broken",');
     expect([400, 500]).toContain(response.status());
   });
 
-  test('empty object: response is not a successful booking shape', async ({ request }) => {
+  test('POST /booking with {} — response is not a successful create shape', async ({ request }) => {
     const token = await getAuthToken(request);
     const response = await api(request).createBooking({});
     await assertCreateDoesNotSucceed(response, request, token);
@@ -137,7 +137,7 @@ test.describe('Restful Booker — Response validation (create & errors)', () => 
     }
   });
 
-  test('response: string depositpaid coerces to boolean true in body', async ({
+  test('string depositpaid becomes boolean true', async ({
     request,
   }, testInfo) => {
     const token = await getAuthToken(request);
@@ -156,7 +156,7 @@ test.describe('Restful Booker — Response validation (create & errors)', () => 
     }
   });
 
-  test('response: numeric checkin coerced to ISO date string in body', async ({
+  test('numeric checkin becomes ISO date', async ({
     request,
   }, testInfo) => {
     const token = await getAuthToken(request);

@@ -2,6 +2,10 @@
 
 UI and API test coverage for **Sauce Demo** (UI) and **Restful Booker** (API), with **Monocart** reporting.
 
+### 📋 Test strategy
+
+See **[`documentation/TEST_STRATEGY.md`](documentation/TEST_STRATEGY.md)** for scope, exclusions.
+
 ---
 
 ## 🛠️ Setup
@@ -111,6 +115,10 @@ utils/           # URLs, API client
 ```
 
 UI specs live under `tests/`; API specs under `tests/api/` (Playwright `api` project).
+
+| Doc | Purpose |
+|-----|---------|
+| [documentation/TEST_STRATEGY.md](documentation/TEST_STRATEGY.md) | What we test / skip, pyramid, CI health idea, deliberate gaps |
 
 ---
 

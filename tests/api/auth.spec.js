@@ -15,7 +15,10 @@ test.describe('Restful Booker — Authentication', () => {
         token: expect.any(String),
       })
     );
+    // In the success payload: token only (error path uses `reason`, not `token`).
+    expect(body).not.toHaveProperty('reason');
     expect(body.token.length).toBeGreaterThan(10);
+    expect(body.token.trim()).toBe(body.token);
   });
 
   test('POST /auth returns error payload for invalid password', async ({ request }) => {

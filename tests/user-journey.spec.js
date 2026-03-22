@@ -8,7 +8,7 @@ import { getInventoryUrlRegex } from '../utils/urls';
 const itemName = SAUCE_DEMO_ITEMS.backpack;
 
 test.describe('e2e user journey', () => {
-  test('standard user completes login through checkout', async ({ page }) => {
+  test('standard user can complete login through checkout', async ({ page }) => {
     const { inventoryPage } = await loginAsStandardUser(page);
     await expect(page).toHaveURL(getInventoryUrlRegex());
     await expect(inventoryPage.title).toBeVisible();
