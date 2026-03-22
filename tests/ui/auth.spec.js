@@ -18,11 +18,11 @@ const LOGIN_URL = getLoginUrlRegex();
 const INVENTORY_URL = getInventoryUrlRegex();
 
 test.describe('auth happy path ui', () => {
-  test('auth standard_user successful login lands on inventory page', async ({ page }) => {
+  test('valid user can login and navigate to inventory page', async ({ page }) => {
     await assertSuccessfulLogin(page);
   });
 
-  test('auth logout returns user to login page', async ({ page }) => {
+  test('logged in user can logout and navigate to login page', async ({ page }) => {
     const { loginPage, inventoryPage } = await assertSuccessfulLogin(page);
 
     await inventoryPage.logout();
@@ -33,14 +33,14 @@ test.describe('auth happy path ui', () => {
 });
 
 test.describe('auth session and route protection', () => {
-  test('unauthenticated deep link to cart shows login', async ({ page }) => {
+  test('unauthenticated user cannot access cart page', async ({ page }) => {
     await page.goto(uiPathUrl('cart.html'), sauceDemoGotoOptions);
     const loginPage = new LoginPage(page);
     await expect(page).toHaveURL(LOGIN_URL);
     await expect(loginPage.loginButton).toBeVisible();
   });
 
-  test('authenticated session persists after reload', async ({ page }) => {
+  test('authenticated user session persists after reload', async ({ page }) => {
     const { inventoryPage } = await assertSuccessfulLogin(page);
     await page.reload();
     await expect(page).toHaveURL(INVENTORY_URL);
@@ -49,11 +49,11 @@ test.describe('auth session and route protection', () => {
 });
 
 test.describe('auth validation and error handling', () => {
-  test('auth locked_out_user shows login error on login page', async ({ page }) => {
+  test('locked_out user cannot login and sees error', async ({ page }) => {
     await loginAndExpectError(page, LOGIN_USERS.lockedOut, LOGIN_ERRORS.lockedOut);
   });
 
-  test('auth standard_user with invalid password shows credentials error', async ({ page }) => {
+  test('valid user with invalid password cannot login and sees error', async ({ page }) => {
     await loginAndExpectError(
       page,
       INVALID_PASSWORD_CREDENTIALS,
@@ -61,7 +61,7 @@ test.describe('auth validation and error handling', () => {
     );
   });
 
-  test('auth blank username shows required username validation', async ({ page }) => {
+  test('blank username cannot login and sees error', async ({ page }) => {
     await loginAndExpectError(
       page,
       { username: '', password: LOGIN_USERS.standard.password },
@@ -69,7 +69,7 @@ test.describe('auth validation and error handling', () => {
     );
   });
 
-  test('auth blank password shows required password validation', async ({ page }) => {
+  test('blank password cannot login and sees error', async ({ page }) => {
     await loginAndExpectError(
       page,
       { username: LOGIN_USERS.standard.username, password: '' },
@@ -77,7 +77,7 @@ test.describe('auth validation and error handling', () => {
     );
   });
 
-  test('auth blank username and password shows required field validation', async ({ page }) => {
+  test('blank username and password cannot login and sees error', async ({ page }) => {
     await loginAndExpectError(
       page,
       { username: '', password: '' },
@@ -85,7 +85,7 @@ test.describe('auth validation and error handling', () => {
     );
   });
 
-  test('auth error banner can be dismissed after invalid login', async ({ page }) => {
+  test('invalid login error banner can be dismissed', async ({ page }) => {
     const loginPage = await loginAndExpectError(
       page,
       INVALID_PASSWORD_CREDENTIALS,
@@ -95,7 +95,7 @@ test.describe('auth validation and error handling', () => {
     await expect(loginPage.errorMessage).toHaveCount(0);
   });
 
-  test('auth valid login succeeds after previous invalid attempt', async ({ page }) => {
+  test('valid login succeeds after previous invalid attempt', async ({ page }) => {
     const loginPage = await loginAndExpectError(
       page,
       INVALID_PASSWORD_CREDENTIALS,

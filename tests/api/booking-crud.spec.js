@@ -3,7 +3,7 @@ import { buildUniqueBookingPayload } from '../fixtures/restfulBooker.js';
 import { api, getAuthToken, safeDeleteBooking } from '../helpers/restfulBookerApi.js';
 
 test.describe('Restful Booker — Booking CRUD', () => {
-  test('CREATE: POST /booking returns bookingid and echoed booking', async ({
+  test('CREATE: POST /booking returns bookingid and booking payload', async ({
     request,
   }, testInfo) => {
     const token = await getAuthToken(request);

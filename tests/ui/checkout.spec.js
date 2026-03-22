@@ -16,7 +16,7 @@ import {
 const itemName = SAUCE_DEMO_ITEMS.backpack;
 
 test.describe('checkout step one validation', () => {
-  test('requires first name', async ({ page }) => {
+  test('first name is required', async ({ page }) => {
     const { checkoutPage } = await navigateToCheckoutStepOne(page, itemName);
     await expect(page).toHaveURL(getCheckoutStepOneUrlRegex());
 
@@ -30,7 +30,7 @@ test.describe('checkout step one validation', () => {
     );
   });
 
-  test('requires last name', async ({ page }) => {
+  test('last name is required', async ({ page }) => {
     const { checkoutPage } = await navigateToCheckoutStepOne(page, itemName);
     await expect(page).toHaveURL(getCheckoutStepOneUrlRegex());
 
@@ -44,7 +44,7 @@ test.describe('checkout step one validation', () => {
     );
   });
 
-  test('requires postal code', async ({ page }) => {
+  test('postal code is required', async ({ page }) => {
     const { checkoutPage } = await navigateToCheckoutStepOne(page, itemName);
     await expect(page).toHaveURL(getCheckoutStepOneUrlRegex());
 
@@ -60,7 +60,7 @@ test.describe('checkout step one validation', () => {
 });
 
 test.describe('checkout navigation and end-to-end', () => {
-  test('moves from cart URL to checkout step one', async ({ page }) => {
+  test('navigates from cart URL to checkout step one', async ({ page }) => {
     const { inventoryPage } = await loginAsStandardUser(page);
     const cartPage = new CartPage(page);
     await inventoryPage.addItemToCart(itemName);
@@ -73,7 +73,7 @@ test.describe('checkout navigation and end-to-end', () => {
     await expect(page).toHaveURL(getCheckoutStepOneUrlRegex());
   });
 
-  test('advances through steps with line item on overview and completes order', async ({
+  test('navigates through steps with line item on overview page and completes order', async ({
     page,
   }) => {
     const { checkoutPage } = await navigateToCheckoutStepOne(page, itemName);

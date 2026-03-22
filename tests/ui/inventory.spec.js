@@ -53,13 +53,13 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('inventory', () => {
-  test('shows full catalog after login', async ({ page }) => {
+  test('displays expected number of products after login', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await expect(inventoryPage.title).toBeVisible();
     await expect(inventoryPage.getInventoryItems()).toHaveCount(SAUCE_DEMO_INVENTORY_COUNT);
   });
 
-  test('sorts prices low to high', async ({ page }) => {
+  test('sorts prices ascending', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.sortBy('lohi');
     await expectPricesSortedAscending(inventoryPage);
@@ -69,7 +69,7 @@ test.describe('inventory', () => {
     );
   });
 
-  test('sorts prices high to low', async ({ page }) => {
+  test('sorts prices descending', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.sortBy('hilo');
     await expectPricesSortedDescending(inventoryPage);
@@ -79,7 +79,7 @@ test.describe('inventory', () => {
     );
   });
 
-  test('sorts names A to Z', async ({ page }) => {
+  test('sorts names ascending', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.sortBy('az');
     const names = await inventoryPage.getDisplayedItemNames();
@@ -87,7 +87,7 @@ test.describe('inventory', () => {
     expect(names).toEqual(sorted);
   });
 
-  test('add and remove updates badge and button state', async ({ page }) => {
+  test('adding and removing items updates badge and button state', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await expectCartBadgeHidden(inventoryPage);
 
@@ -100,7 +100,7 @@ test.describe('inventory', () => {
     await expect(inventoryPage.getAddToCartButton(itemName)).toBeVisible();
   });
 
-  test('add from inventory appears in cart with correct URL', async ({ page }) => {
+  test('adding from inventory appears in cart with correct URL', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await inventoryPage.addItemToCart(itemName);
     await expectCartBadgeCount(inventoryPage, 1);
