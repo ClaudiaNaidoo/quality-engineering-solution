@@ -2,7 +2,10 @@ import { expect, test } from '@playwright/test';
 import { CartPage } from '../../pages/CartPage';
 import { CHECKOUT_STEP_ONE_ERRORS } from '../fixtures/checkoutErrors';
 import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
-import { loginAsStandardUser, navigateToCheckoutStepOne } from '../helpers/flows';
+import {
+  loginAsStandardUser,
+  navigateToCheckoutStepOne,
+} from '../helpers/checkoutFlow';
 import {
   getCartUrlRegex,
   getCheckoutCompleteUrlRegex,

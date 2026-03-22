@@ -3,7 +3,10 @@ import { CartPage } from '../../pages/CartPage';
 import { InventoryPage } from '../../pages/InventoryPage';
 import { LoginPage } from '../../pages/LoginPage';
 import { LOGIN_USERS } from '../fixtures/loginUsers';
-import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
+import {
+  SAUCE_DEMO_INVENTORY_COUNT,
+  SAUCE_DEMO_ITEMS,
+} from '../fixtures/sauceDemoCatalog';
 import { getCartUrlRegex, getInventoryUrlRegex } from '../../utils/urls';
 
 const itemName = SAUCE_DEMO_ITEMS.backpack;
@@ -14,7 +17,7 @@ function parsePriceLabel(text) {
 
 async function expectPricesSortedAscending(inventoryPage) {
   const labels = await inventoryPage.getDisplayedPrices();
-  expect(labels).toHaveLength(6);
+  expect(labels).toHaveLength(SAUCE_DEMO_INVENTORY_COUNT);
   const values = labels.map(parsePriceLabel);
   for (let i = 1; i < values.length; i += 1) {
     expect(values[i]).toBeGreaterThanOrEqual(values[i - 1]);
@@ -25,7 +28,7 @@ async function expectPricesSortedAscending(inventoryPage) {
 
 async function expectPricesSortedDescending(inventoryPage) {
   const labels = await inventoryPage.getDisplayedPrices();
-  expect(labels).toHaveLength(6);
+  expect(labels).toHaveLength(SAUCE_DEMO_INVENTORY_COUNT);
   const values = labels.map(parsePriceLabel);
   for (let i = 1; i < values.length; i += 1) {
     expect(values[i]).toBeLessThanOrEqual(values[i - 1]);
@@ -50,10 +53,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('inventory', () => {
-  test('shows six products after login', async ({ page }) => {
+  test('shows full catalog after login', async ({ page }) => {
     const inventoryPage = new InventoryPage(page);
     await expect(inventoryPage.title).toBeVisible();
-    await expect(inventoryPage.getInventoryItems()).toHaveCount(6);
+    await expect(inventoryPage.getInventoryItems()).toHaveCount(SAUCE_DEMO_INVENTORY_COUNT);
   });
 
   test('sorts prices low to high', async ({ page }) => {
@@ -61,7 +64,9 @@ test.describe('inventory', () => {
     await inventoryPage.sortBy('lohi');
     await expectPricesSortedAscending(inventoryPage);
     await expect(inventoryPage.getItemPriceAt(0)).toHaveText('$7.99');
-    await expect(inventoryPage.getItemPriceAt(5)).toHaveText('$49.99');
+    await expect(inventoryPage.getItemPriceAt(SAUCE_DEMO_INVENTORY_COUNT - 1)).toHaveText(
+      '$49.99'
+    );
   });
 
   test('sorts prices high to low', async ({ page }) => {
@@ -69,7 +74,9 @@ test.describe('inventory', () => {
     await inventoryPage.sortBy('hilo');
     await expectPricesSortedDescending(inventoryPage);
     await expect(inventoryPage.getItemPriceAt(0)).toHaveText('$49.99');
-    await expect(inventoryPage.getItemPriceAt(5)).toHaveText('$7.99');
+    await expect(inventoryPage.getItemPriceAt(SAUCE_DEMO_INVENTORY_COUNT - 1)).toHaveText(
+      '$7.99'
+    );
   });
 
   test('sorts names A to Z', async ({ page }) => {

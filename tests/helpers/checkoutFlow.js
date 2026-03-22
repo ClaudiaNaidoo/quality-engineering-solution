@@ -6,7 +6,7 @@ import { LOGIN_USERS } from '../fixtures/loginUsers';
 import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
 
 /**
- * Log in as standard_user and return page objects for follow-on steps.
+ * Log in as standard_user/valid credentials and return page objects for follow-on steps.
  * @param {import('@playwright/test').Page} page
  */
 export async function loginAsStandardUser(page) {

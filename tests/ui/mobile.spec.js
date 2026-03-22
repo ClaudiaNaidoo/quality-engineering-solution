@@ -2,7 +2,7 @@
  * Lightweight mobile coverage for a critical Sauce Demo flow (viewport, touch, UA via device emulation).
  */
 import { expect, test, devices } from '@playwright/test';
-import { navigateToCheckoutStepOne } from '../helpers/flows';
+import { navigateToCheckoutStepOne } from '../helpers/checkoutFlow';
 import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
 
 

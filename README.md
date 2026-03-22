@@ -147,7 +147,7 @@ Monocart summary from that run: **51 passed**, **0 failed** (see `monocart-repor
 tests/ui/        # UI specs (*.spec.js) — Sauce Demo (+ mobile.spec.js → `mobile` project only)
 tests/api/       # API specs (*.spec.js) — Restful Booker
 pages/           # Page objects (UI)
-tests/helpers/   # Shared flows and API helpers
+tests/helpers/   # e.g. checkoutFlow.js, authFlows.js, restfulBookerApi.js
 tests/fixtures/  # Test data
 utils/           # URLs, API client
 ```

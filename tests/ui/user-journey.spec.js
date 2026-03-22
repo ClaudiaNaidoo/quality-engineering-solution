@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 import { CartPage } from '../../pages/CartPage';
 import { CheckoutPage } from '../../pages/CheckoutPage';
 import { SAUCE_DEMO_ITEMS } from '../fixtures/sauceDemoCatalog';
-import { loginAsStandardUser } from '../helpers/flows';
+import { loginAsStandardUser } from '../helpers/checkoutFlow';
 import { getInventoryUrlRegex } from '../../utils/urls';
 
 const itemName = SAUCE_DEMO_ITEMS.backpack;
